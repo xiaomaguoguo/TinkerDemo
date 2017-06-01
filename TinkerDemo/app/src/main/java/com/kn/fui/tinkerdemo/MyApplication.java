@@ -20,7 +20,7 @@ import com.kn.fui.tinkerdemo.util.TinkerManager;
  * Created by MaZhihua on 2017/5/26.
  */
 
-@DefaultLifeCycle(application = "knothing.bftv.com.tinkerdemo.SampleApplication",
+@DefaultLifeCycle(application = "com.kn.fui.tinkerdemo.SampleApplication",
         flags = ShareConstants.TINKER_ENABLE_ALL,
         loadVerifyFlag = false)
 public class MyApplication extends DefaultApplicationLike{
