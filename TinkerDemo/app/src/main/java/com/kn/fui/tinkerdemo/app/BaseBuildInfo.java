@@ -16,7 +16,7 @@
 
 package com.kn.fui.tinkerdemo.app;
 
-import knothing.bftv.com.tinkerdemo.BuildConfig;
+import com.kn.fui.tinkerdemo.BuildConfig;
 
 /**
  * Created by zhangshaowen on 16/6/30.

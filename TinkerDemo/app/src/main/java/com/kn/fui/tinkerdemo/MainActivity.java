@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bftv.fui.tinkerdemo.R;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 
 import java.io.File;
