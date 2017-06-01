@@ -1,13 +1,13 @@
-package knothing.bftv.com.tinkerdemo;
+package com.kn.fui.tinkerdemo;
 
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bftv.fui.tinkerdemo.R;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 
 import java.io.File;

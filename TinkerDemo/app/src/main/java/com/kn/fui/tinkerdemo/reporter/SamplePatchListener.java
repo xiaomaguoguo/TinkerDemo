@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.reporter;
+package com.kn.fui.tinkerdemo.reporter;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -32,9 +32,9 @@ import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 import java.io.File;
 import java.util.Properties;
 
-import knothing.bftv.com.tinkerdemo.app.BuildInfo;
-import knothing.bftv.com.tinkerdemo.crash.SampleUncaughtExceptionHandler;
-import knothing.bftv.com.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerdemo.app.BuildInfo;
+import com.kn.fui.tinkerdemo.crash.SampleUncaughtExceptionHandler;
+import com.kn.fui.tinkerdemo.util.Utils;
 
 
 /**

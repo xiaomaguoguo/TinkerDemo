@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.util;
+package com.kn.fui.tinkerdemo.util;
 
 import com.tencent.tinker.lib.listener.PatchListener;
 import com.tencent.tinker.lib.patch.AbstractPatch;
@@ -26,11 +26,11 @@ import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.lib.util.UpgradePatchRetry;
 import com.tencent.tinker.loader.app.ApplicationLike;
 
-import knothing.bftv.com.tinkerdemo.crash.SampleUncaughtExceptionHandler;
-import knothing.bftv.com.tinkerdemo.reporter.SampleLoadReporter;
-import knothing.bftv.com.tinkerdemo.reporter.SamplePatchListener;
-import knothing.bftv.com.tinkerdemo.reporter.SamplePatchReporter;
-import knothing.bftv.com.tinkerdemo.service.SampleResultService;
+import com.kn.fui.tinkerdemo.crash.SampleUncaughtExceptionHandler;
+import com.kn.fui.tinkerdemo.reporter.SampleLoadReporter;
+import com.kn.fui.tinkerdemo.reporter.SamplePatchListener;
+import com.kn.fui.tinkerdemo.reporter.SamplePatchReporter;
+import com.kn.fui.tinkerdemo.service.SampleResultService;
 
 
 /**

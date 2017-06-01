@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.util;
+package com.kn.fui.tinkerdemo.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

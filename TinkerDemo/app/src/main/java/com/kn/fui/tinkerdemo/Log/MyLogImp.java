@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.Log;
+package com.kn.fui.tinkerdemo.Log;
 
 import android.util.Log;
 

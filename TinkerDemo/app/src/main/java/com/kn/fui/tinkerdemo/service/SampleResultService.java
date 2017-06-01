@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.service;
+package com.kn.fui.tinkerdemo.service;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -27,7 +27,7 @@ import com.tencent.tinker.lib.util.TinkerServiceInternals;
 
 import java.io.File;
 
-import knothing.bftv.com.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerdemo.util.Utils;
 
 
 /**

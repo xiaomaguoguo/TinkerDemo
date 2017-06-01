@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.crash;
+package com.kn.fui.tinkerdemo.crash;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,9 +26,9 @@ import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import knothing.bftv.com.tinkerdemo.reporter.SampleTinkerReport;
-import knothing.bftv.com.tinkerdemo.util.TinkerManager;
-import knothing.bftv.com.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerdemo.reporter.SampleTinkerReport;
+import com.kn.fui.tinkerdemo.util.TinkerManager;
+import com.kn.fui.tinkerdemo.util.Utils;
 
 /**
  * optional, use dynamic configuration is better way

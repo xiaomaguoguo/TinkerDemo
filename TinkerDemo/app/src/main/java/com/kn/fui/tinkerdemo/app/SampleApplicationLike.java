@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.app;
+package com.kn.fui.tinkerdemo.app;
 
 import android.annotation.TargetApi;
 import android.app.Application;
@@ -29,9 +29,9 @@ import com.tencent.tinker.loader.app.ApplicationLifeCycle;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
-import knothing.bftv.com.tinkerdemo.Log.MyLogImp;
-import knothing.bftv.com.tinkerdemo.util.SampleApplicationContext;
-import knothing.bftv.com.tinkerdemo.util.TinkerManager;
+import com.kn.fui.tinkerdemo.Log.MyLogImp;
+import com.kn.fui.tinkerdemo.util.SampleApplicationContext;
+import com.kn.fui.tinkerdemo.util.TinkerManager;
 
 /**
  * because you can not use any other class in your application, we need to

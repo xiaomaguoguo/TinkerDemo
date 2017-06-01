@@ -1,4 +1,4 @@
-package knothing.bftv.com.tinkerdemo;
+package com.kn.fui.tinkerdemo;
 
 import android.annotation.TargetApi;
 import android.app.Application;
@@ -12,9 +12,9 @@ import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
-import knothing.bftv.com.tinkerdemo.Log.MyLogImp;
-import knothing.bftv.com.tinkerdemo.util.SampleApplicationContext;
-import knothing.bftv.com.tinkerdemo.util.TinkerManager;
+import com.kn.fui.tinkerdemo.Log.MyLogImp;
+import com.kn.fui.tinkerdemo.util.SampleApplicationContext;
+import com.kn.fui.tinkerdemo.util.TinkerManager;
 
 /**
  * Created by MaZhihua on 2017/5/26.

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.reporter;
+package com.kn.fui.tinkerdemo.reporter;
 
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import knothing.bftv.com.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerdemo.util.Utils;
 
 
 /**

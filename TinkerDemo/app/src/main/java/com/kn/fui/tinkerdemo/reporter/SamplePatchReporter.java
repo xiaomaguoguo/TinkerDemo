@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.reporter;
+package com.kn.fui.tinkerdemo.reporter;
 
 import android.content.Context;
 import android.content.Intent;

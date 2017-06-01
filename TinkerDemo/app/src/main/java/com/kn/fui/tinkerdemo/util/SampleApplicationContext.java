@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 
-package knothing.bftv.com.tinkerdemo.app;
+package com.kn.fui.tinkerdemo.util;
 
-import knothing.bftv.com.tinkerdemo.BuildConfig;
+import android.app.Application;
+import android.content.Context;
 
 /**
- * Created by zhangshaowen on 16/6/30.
- * we use BuildInfo instead of {@link BuildInfo} to make less change
+ * Created by zhangshaowen on 16/8/9.
  */
-public class BuildInfo {
-    /**
-     * they are not final, so they won't change with the BuildConfig values!
-     */
-    public static boolean DEBUG        = BuildConfig.DEBUG;
-    public static String VERSION_NAME = BuildConfig.VERSION_NAME;
-    public static int     VERSION_CODE = BuildConfig.VERSION_CODE;
-
-    public static String MESSAGE       = BuildConfig.MESSAGE;
-    public static String TINKER_ID     = BuildConfig.TINKER_ID;
-    public static String PLATFORM      = BuildConfig.PLATFORM;
-
+public class SampleApplicationContext {
+    public static Application application = null;
+    public static Context context = null;
 }
