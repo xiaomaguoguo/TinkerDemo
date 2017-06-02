@@ -101,14 +101,14 @@ ext {
 
     //for normal build
     //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/app-debug-0602-16-06-03.apk"
+    tinkerOldApkPath = "${bakPath}/app-debug-0602-16-28-20.apk"
     //proguard mapping file to build patch apk
-    tinkerApplyMappingPath = "${bakPath}/app-debug-0602-16-06-03-mapping.txt"
+    tinkerApplyMappingPath = "${bakPath}/app-debug-0602-16-28-20-mapping.txt"
     //resource R.txt to build patch apk, must input if there is resource changed
-    tinkerApplyResourcePath = "${bakPath}/app-debug-0602-16-06-03-R.txt"
+    tinkerApplyResourcePath = "${bakPath}/app-debug-0602-16-28-20-R.txt"
 
     //only use for build all flavor, if not, just ignore this field
-    tinkerBuildFlavorDirectory = "${bakPath}/app-debug-0602-16-06-03"
+    tinkerBuildFlavorDirectory = "${bakPath}/app-debug-0602-16-28-20"
 }
 
 def gitSha() {
