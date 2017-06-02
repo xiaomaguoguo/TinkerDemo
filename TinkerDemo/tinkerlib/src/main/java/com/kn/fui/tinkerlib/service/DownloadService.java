@@ -84,7 +84,7 @@ public class DownloadService extends IntentService implements IIntentType {
 
     }
 
-    public static JSONObject getJSONObject(String urlToDownload) {
+    public JSONObject getJSONObject(String urlToDownload) {
 
         if(TextUtils.isEmpty(urlToDownload)){
             return null;
