@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.kn.fui.tinkerdemo.R;
 import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
+import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
 import java.io.File;
 
@@ -48,13 +49,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 File file = new File(path);
                 if(file.exists()){
                     TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(),path);
+
+                    String manifestTinkerId = ShareTinkerInternals.getManifestTinkerID(getApplicationContext());
+
+
                 }
                 break;
 
             case R.id.button2: //测试
-//                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
-//                Log.i("MainActivity","再测试一把");
+                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
                 Log.i("MainActivity","再测试一把");
+//                Log.i("MainActivity","再测试一把");
                 break;
 
             case R.id.button3: // 回滚
