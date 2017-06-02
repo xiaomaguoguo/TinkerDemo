@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button2: //测试
-//                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.button3: // 回滚
