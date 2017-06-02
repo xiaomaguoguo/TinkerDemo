@@ -7,5 +7,9 @@
             android:name=".service.SampleResultService"
             android:exported="false"/>
 
+        <service
+            android:name=".service.DownloadService"
+            android:exported="false"/>
+
     </application>
 </manifest>
