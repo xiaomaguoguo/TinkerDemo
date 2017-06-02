@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.Log;
+package com.kn.fui.tinkerlib.Log;
 
 import android.util.Log;
 

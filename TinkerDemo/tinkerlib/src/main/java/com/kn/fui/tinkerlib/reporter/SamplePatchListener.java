@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.reporter;
+package com.kn.fui.tinkerlib.reporter;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -32,9 +32,8 @@ import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 import java.io.File;
 import java.util.Properties;
 
-import com.kn.fui.tinkerdemo.app.BuildInfo;
-import com.kn.fui.tinkerdemo.crash.SampleUncaughtExceptionHandler;
-import com.kn.fui.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerlib.crash.SampleUncaughtExceptionHandler;
+import com.kn.fui.tinkerlib.util.Utils;
 
 
 /**
@@ -112,7 +111,7 @@ public class SamplePatchListener extends DefaultPatchListener {
                 String platform = properties.getProperty(Utils.PLATFORM);
                 TinkerLog.i(TAG, "get platform:" + platform);
                 // check patch platform require
-                if (platform == null || !platform.equals(BuildInfo.PLATFORM)) {
+                if (platform == null || !platform.equals("all")) {
                     returnCode = Utils.ERROR_PATCH_CONDITION_NOT_SATISFIED;
                 }
             }

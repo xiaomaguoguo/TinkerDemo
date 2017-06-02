@@ -29,9 +29,9 @@ import com.tencent.tinker.loader.app.ApplicationLifeCycle;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
-import com.kn.fui.tinkerdemo.Log.MyLogImp;
-import com.kn.fui.tinkerdemo.util.SampleApplicationContext;
-import com.kn.fui.tinkerdemo.util.TinkerManager;
+import com.kn.fui.tinkerlib.Log.MyLogImp;
+import com.kn.fui.tinkerlib.util.SampleApplicationContext;
+import com.kn.fui.tinkerlib.util.TinkerManager;
 
 /**
  * because you can not use any other class in your application, we need to
@@ -55,7 +55,7 @@ import com.kn.fui.tinkerdemo.util.TinkerManager;
  * Created by zhangshaowen on 16/3/17.
  */
 @SuppressWarnings("unused")
-@DefaultLifeCycle(application = "tinker.sample.android.app.SampleApplication",
+@DefaultLifeCycle(application = "com.kn.fui.tinkerdemo.SampleApplication",
                   flags = ShareConstants.TINKER_ENABLE_ALL,
                   loadVerifyFlag = false)
 public class SampleApplicationLike extends DefaultApplicationLike {

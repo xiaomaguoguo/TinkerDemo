@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.util;
+package com.kn.fui.tinkerlib.util;
 
 import com.tencent.tinker.lib.listener.PatchListener;
 import com.tencent.tinker.lib.patch.AbstractPatch;
@@ -26,11 +26,11 @@ import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.lib.util.UpgradePatchRetry;
 import com.tencent.tinker.loader.app.ApplicationLike;
 
-import com.kn.fui.tinkerdemo.crash.SampleUncaughtExceptionHandler;
-import com.kn.fui.tinkerdemo.reporter.SampleLoadReporter;
-import com.kn.fui.tinkerdemo.reporter.SamplePatchListener;
-import com.kn.fui.tinkerdemo.reporter.SamplePatchReporter;
-import com.kn.fui.tinkerdemo.service.SampleResultService;
+import com.kn.fui.tinkerlib.crash.SampleUncaughtExceptionHandler;
+import com.kn.fui.tinkerlib.reporter.SampleLoadReporter;
+import com.kn.fui.tinkerlib.reporter.SamplePatchListener;
+import com.kn.fui.tinkerlib.reporter.SamplePatchReporter;
+import com.kn.fui.tinkerlib.service.SampleResultService;
 
 
 /**

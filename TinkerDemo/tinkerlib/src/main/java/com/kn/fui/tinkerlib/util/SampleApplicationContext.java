@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.util;
+package com.kn.fui.tinkerlib.util;
 
 import android.app.Application;
 import android.content.Context;

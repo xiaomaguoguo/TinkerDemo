@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.crash;
+package com.kn.fui.tinkerlib.crash;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,9 +26,9 @@ import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import com.kn.fui.tinkerdemo.reporter.SampleTinkerReport;
-import com.kn.fui.tinkerdemo.util.TinkerManager;
-import com.kn.fui.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerlib.reporter.SampleTinkerReport;
+import com.kn.fui.tinkerlib.util.TinkerManager;
+import com.kn.fui.tinkerlib.util.Utils;
 
 /**
  * optional, use dynamic configuration is better way

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="knothing.bftv.com.tinkerdemo.com.bftv.fui.tinkerdemo.MainActivity">
+    android:orientation="vertical"
+    tools:context=".app.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,5 +23,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="测试"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回滚"/>
+
+    <ImageView
+        android:id="@+id/iv1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/iv1"/>
 
 </LinearLayout>

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.kn.fui.tinkerdemo.reporter;
+package com.kn.fui.tinkerlib.reporter;
 
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import com.kn.fui.tinkerdemo.util.Utils;
+import com.kn.fui.tinkerlib.util.Utils;
 
 
 /**
