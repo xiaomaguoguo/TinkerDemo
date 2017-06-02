@@ -3,6 +3,7 @@ package com.kn.fui.tinkerdemo.app;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button2: //测试
-                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "from Patch", Toast.LENGTH_SHORT).show();
+//                Log.i("MainActivity","再测试一把");
                 break;
 
             case R.id.button3: // 回滚
