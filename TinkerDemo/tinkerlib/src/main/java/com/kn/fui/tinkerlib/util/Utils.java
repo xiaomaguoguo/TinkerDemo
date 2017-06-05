@@ -63,6 +63,10 @@ public class Utils {
         return background;
     }
 
+    /**
+     * 如果需要检测修复补丁后，当前app是否在后台，可在合适的地方调用以下函数,by : MZH
+     * @param back
+     */
     public static void setBackground(boolean back) {
         background = back;
     }
