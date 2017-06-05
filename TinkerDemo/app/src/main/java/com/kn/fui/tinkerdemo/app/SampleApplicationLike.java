@@ -21,6 +21,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.lib.tinker.Tinker;
@@ -77,7 +78,7 @@ public class SampleApplicationLike extends DefaultApplicationLike {
     public void onBaseContextAttached(Context base) {
         super.onBaseContextAttached(base);
         //you must install multiDex whatever tinker is installed!
-//        MultiDex.install(base);
+        MultiDex.install(base);
 
         SampleApplicationContext.application = getApplication();
         SampleApplicationContext.context = getApplication();
