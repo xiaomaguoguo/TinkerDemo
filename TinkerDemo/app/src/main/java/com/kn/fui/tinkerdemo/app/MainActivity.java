@@ -1,5 +1,6 @@
 package com.kn.fui.tinkerdemo.app;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Button button,button2,button3;
+    private Button button,button2,button3,button4;
 
     private ImageView iv;
     
@@ -32,9 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
         iv = (ImageView) findViewById(R.id.iv1);
 
         iv.setImageResource(R.drawable.iv2);
@@ -65,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button3: // 回滚
                 Tinker.with(getApplicationContext()).cleanPatch();
                 Toast.makeText(this, "回滚完成，请重启应用", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.button4: //  JavaJs互调
+                Intent javaJsIntent = new Intent(this,JavaJsActivity.class);
+                startActivity(javaJsIntent);
                 break;
 
         }
