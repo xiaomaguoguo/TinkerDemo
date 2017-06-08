@@ -89,6 +89,7 @@ android {
 }
 
 def bakPath = file("${buildDir}/bakApk/")
+def basePath = file("./app-release.apk")
 
 /**
  * you can use assembleRelease to build you base apk
@@ -101,7 +102,8 @@ ext {
 
     //for normal build
     //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/app-debug-0605-15-57-59.apk"
+//    tinkerOldApkPath = "${bakPath}/app-debug-0605-15-57-59.apk"
+    tinkerOldApkPath = "${basePath}"
     //proguard mapping file to build patch apk
     tinkerApplyMappingPath = "${bakPath}/app-debug-0605-15-57-59-mapping.txt"
     //resource R.txt to build patch apk, must input if there is resource changed
@@ -319,6 +321,8 @@ if (buildWithTinker()) {
              * patch version via packageConfig
              */
             configField("patchVersion", "1.0.1")
+
+            configField("patchDesc", "这是我对这个patch修复补丁包的基本描述，我需要把他打到生成的patch补丁包package-meta.txt里面去.")
         }
         //or you can add config filed outside, or get meta value from old apk
         //project.tinkerPatch.packageConfig.configField("test1", project.tinkerPatch.packageConfig.getMetaDataFromOldApk("Test"))
