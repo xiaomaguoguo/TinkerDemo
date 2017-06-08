@@ -26,10 +26,8 @@ import com.tencent.tinker.loader.shareutil.SharePatchFileUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -40,6 +38,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * IO工具类
@@ -48,22 +49,32 @@ public class IOUtils {
 
     public static final String TAG = IOUtils.class.getSimpleName();
 
+
     /**
      * 从网络获取流
      * @param urlToDownload
      * @return
      */
-    public static InputStream getInputStream(String urlToDownload) {
+    public static InputStream getInputStream(HashMap<String,String> params,String urlToDownload,boolean isDownloadFile) {
         try {
             URL url = new URL(urlToDownload);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
             connection.setDoOutput(true);             //允许向服务器输出数据
-//            connection.setDoInput(true);              //允许接收服务器数据
-            connection.setRequestMethod("POST");
-//            connection.setUseCaches(false);           // Post 请求不能使用缓存
-//            connection.connect();
+            connection.setDoInput(true);              //允许接收服务器数据
+            connection.setRequestMethod(isDownloadFile ? "GET" : "POST");
+            connection.setUseCaches(false);           // Post 请求不能使用缓存
+            if(!isDownloadFile && params != null && !params.isEmpty()){
+                byte[] data = getRequestData(params).getBytes();//获得请求体
+                //设置请求体的类型是文本类型
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                //设置请求体的长度
+                connection.setRequestProperty("Content-Length", String.valueOf(data.length));
+                //获得输出流，向服务器写入数据
+                OutputStream outputStream = connection.getOutputStream();
+                outputStream.write(data);
+            }
             if(connection.getResponseCode() == 200 ){
                 return connection.getInputStream();
             }
@@ -108,34 +119,6 @@ public class IOUtils {
     }
 
     /**
-     * 将字符串写出到输出流
-     * @param content
-     * @param os
-     * @throws IOException
-     */
-    public static void writeToStream(String content, OutputStream os) throws IOException {
-        BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(content);
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-        }
-    }
-
-    /**
-     * 将文件内容读入到String
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    public static String readFileAsString(File file) throws IOException {
-        return readAsString(new FileInputStream(file));
-    }
-
-    /**
      * 将输入流转换为String
      * @param is
      * @return
@@ -168,77 +151,61 @@ public class IOUtils {
      * @param urlToDownload
      * @return
      */
-    public static JSONObject getJSONObject(String urlToDownload) {
+    public static JSONObject getJSONObject(HashMap<String,String> params,String urlToDownload) {
 
         if(TextUtils.isEmpty(urlToDownload)){
             return null;
         }
 
-        InputStream input = getInputStream(urlToDownload);
+        InputStream input = getInputStream(params,urlToDownload,false);
         if(input == null){
             return null;
         }
 
         try{
-
             String json = readAsString(input);
             if(TextUtils.isEmpty(json)){
                 return null;
             }
-
             JSONObject jsonObject = new JSONObject(json);
             return jsonObject;
         }catch (IOException | JSONException e){
             e.printStackTrace();
         }
         return null;
+    }
 
-
-        /*InputStream input = null;
-        ByteArrayOutputStream baos = null;
-
+    /**
+     * 将params参数封闭为编码为UTF-8的POST请求体
+     */
+    public static String getRequestData(HashMap<String, String> params) {
+        StringBuilder stringBuffer = new StringBuilder();        //存储封装好的请求体信息
         try {
-            input = getInputStream(urlToDownload);
-            readAsString()
-            if (input != null) { // 请求正常
-                input = new BufferedInputStream(input);
-                baos = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int len = 0;
-                while ((len = input.read(buffer)) != -1) {
-                    baos.write(buffer, 0, len);
-                }
-                String json = baos.toString();
-                JSONObject jsonObject = new JSONObject(json);
-                return jsonObject;
+            for(Map.Entry<String, String> entry : params.entrySet()) {
+                stringBuffer.append(entry.getKey())
+                        .append("=")
+                        .append(URLEncoder.encode(entry.getValue(), "UTF-8"))
+                        .append("&");
             }
-        } catch ( IOException|JSONException e ) {
+            stringBuffer.deleteCharAt(stringBuffer.length() - 1);    //删除最后的一个"&"
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(baos != null && input != null){
-                try {
-                    baos.close();
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
+        }
+        return stringBuffer.toString();
     }
 
     //TODO 以下功能需要测试
-    public static void downloadAndSave2Sdcard(Context context,String downloadUrl,String patchServerMd5){
+    public static void downloadAndSave2Sdcard(Context context,HashMap<String,String> params,String downloadUrl,String patchServerMd5){
         // /storage/emulated/0/Android/data/packageName/cache
         String externamCache =  context.getExternalCacheDir().getAbsolutePath();
         String filePath = externamCache.concat("/").concat("patch.abc");
         File downloadFile = new File(filePath);
         try {
-            InputStream input = getInputStream(downloadUrl);
+            InputStream input = getInputStream(params,downloadUrl,true);
             writeToFile(readAsString(input),downloadFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 //        try {
 //            OutputStream output = new FileOutputStream(downloadFile);
 //            byte data[] = new byte[1024];
@@ -255,7 +222,6 @@ public class IOUtils {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
 
         boolean isSuccess = verifyDownloadFileCorrect(patchServerMd5,downloadFile);
         Log.d(TAG,isSuccess ? "下载并保存成功,开始打补丁..." : "下载或者校验失败...");
@@ -287,6 +253,34 @@ public class IOUtils {
      */
     public static boolean checkTinkerIdIsMatch(String manifestTinkerId, String patchTinkerId){
         return !TextUtils.isEmpty(patchTinkerId) && !TextUtils.isEmpty(manifestTinkerId) && TextUtils.equals(manifestTinkerId,patchTinkerId);
+    }
+
+    /**
+     * 将字符串写出到输出流
+     * @param content
+     * @param os
+     * @throws IOException
+     */
+    public static void writeToStream(String content, OutputStream os) throws IOException {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(content);
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
+    }
+
+    /**
+     * 将文件内容读入到String
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static String readFileAsString(File file) throws IOException {
+        return readAsString(new FileInputStream(file));
     }
 
 }

@@ -15,17 +15,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kn.fui.tinkerdemo.R;
+import com.kn.fui.tinkerlib.util.IOUtils;
 import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Button button,button2,button3,button4;
+    private Button button,button2,button3,button4,button5;
 
     private ImageView iv;
     
@@ -38,10 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
         button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
         iv = (ImageView) findViewById(R.id.iv1);
 
         iv.setImageResource(R.drawable.iv2);
@@ -77,6 +83,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button4: //  JavaJs互调
                 Intent javaJsIntent = new Intent(this,JavaJsActivity.class);
                 startActivity(javaJsIntent);
+                break;
+
+            case R.id.button5: //请求服务器
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String URL = "null";
+                        HashMap<String,String> params = new HashMap<>();
+                        params.put("platform","MST_6A838");
+                        params.put("supportvr","1");
+                        params.put("method","bftv.voice.remind");
+                        params.put("version","2.0");
+                        params.put("softid","11170402");
+                        params.put("softid","11170402");
+                        params.put("apptoken","282340ce12c5e10fa84171660a2054f8");
+                        params.put("from","bftv_android");
+                        params.put("requestplatform","tv");
+                        params.put("requestplatform","tv");
+                        params.put("sys_version","V1.0.19");
+                        JSONObject jsonObject = IOUtils.getJSONObject(params,URL);
+                        Log.i(TAG,jsonObject.toString());
+                    }
+                }).start();
                 break;
 
         }

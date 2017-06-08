@@ -11,6 +11,8 @@ import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * Created by KNothing on 2017/6/2.
  * 下载服务类
@@ -50,7 +52,8 @@ public class DownloadService extends IntentService implements IIntentType {
         switch (type){
 
             case GET_PATCH_INFO: // 获取patch相关信息
-                JSONObject jsonObject = IOUtils.getJSONObject(intent.getStringExtra(PATCH_INFO_URL));
+                HashMap<String,String> params = new HashMap<>();
+                JSONObject jsonObject = IOUtils.getJSONObject(params,intent.getStringExtra(PATCH_INFO_URL));
                 if(jsonObject == null){
                     return ;
                 }
@@ -63,7 +66,7 @@ public class DownloadService extends IntentService implements IIntentType {
 
                     // 基准包与patch版本不匹配，则不需要下载
                     if(IOUtils.checkTinkerIdIsMatch(manifestTinkerId,patchTinkerId)){
-                        IOUtils.downloadAndSave2Sdcard(getApplicationContext(),patchDownloadUrl,patchMd5);
+                        IOUtils.downloadAndSave2Sdcard(getApplicationContext(),params,patchDownloadUrl,patchMd5);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
