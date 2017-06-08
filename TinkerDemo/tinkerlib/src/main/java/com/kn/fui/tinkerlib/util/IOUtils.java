@@ -60,10 +60,10 @@ public class IOUtils {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
             connection.setDoOutput(true);             //允许向服务器输出数据
-            connection.setDoInput(true);              //允许接收服务器数据
+//            connection.setDoInput(true);              //允许接收服务器数据
             connection.setRequestMethod("POST");
-            connection.setUseCaches(false);           // Post 请求不能使用缓存
-            connection.connect();
+//            connection.setUseCaches(false);           // Post 请求不能使用缓存
+//            connection.connect();
             if(connection.getResponseCode() == 200 ){
                 return connection.getInputStream();
             }
