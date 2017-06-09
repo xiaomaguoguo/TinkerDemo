@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String URL = "http://ptbftv.gitv.tv";
+                        String URL = "";
                         HashMap<String,String> params = new HashMap<>();
                         params.put("platform","MST_6A838");
                         params.put("supportvr","1");
