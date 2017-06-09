@@ -1,13 +1,21 @@
 package com.kn.fui.tinkerdemo.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kn.fui.tinkerdemo.R;
+import com.kn.fui.tinkerlib.util.CommonParams;
+import com.kn.fui.tinkerlib.util.DeviceUtils;
 import com.kn.fui.tinkerlib.util.IOUtils;
 import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
@@ -70,9 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button2: //测试
-                Toast.makeText(this, "来自补丁5", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "来自补丁", Toast.LENGTH_SHORT).show();
                 Log.i("MainActivity","再测试一把");
-//                Log.i("MainActivity","再测试一把");
                 break;
 
             case R.id.button3: // 回滚
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String URL = "null";
+                        String URL = "http://ptbftv.gitv.tv";
                         HashMap<String,String> params = new HashMap<>();
                         params.put("platform","MST_6A838");
                         params.put("supportvr","1");
@@ -110,4 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
+
 }

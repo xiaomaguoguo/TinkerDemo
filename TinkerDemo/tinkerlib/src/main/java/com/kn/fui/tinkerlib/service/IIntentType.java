@@ -8,8 +8,8 @@ public interface IIntentType {
 
     int GET_PATCH_INFO = 10;
 
-    String INTENT_KEY_TYPE = "intent_key_type";
+    int DOWNLOAD_PATCH = 20;
 
-    String PATCH_INFO_URL = "patch_inof_url";
+    String INTENT_KEY_TYPE = "intent_key_type";
 
 }
