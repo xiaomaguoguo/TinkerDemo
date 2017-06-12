@@ -256,7 +256,7 @@ public class IOUtils {
     }
 
     /**
-     * 告诉服务器，下载补丁、安装补丁操作都成功了
+     * 告诉服务器，下载补丁失败
      */
     private static void askFeedbackToServerFailed(Context context,String downloadFailedReason){
         HashMap<String,String> params = new HashMap<>();
