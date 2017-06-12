@@ -105,6 +105,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    //TODO 这块的网络类型需要跟服务端定
     public static String getInternetType(Context context){
         ConnectivityManager mConnectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         //检查网络连接

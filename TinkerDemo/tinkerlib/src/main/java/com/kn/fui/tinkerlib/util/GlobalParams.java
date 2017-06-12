@@ -1,6 +1,7 @@
 package com.kn.fui.tinkerlib.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.HashMap;
 
@@ -12,11 +13,11 @@ public class CommonParams {
 
     public static final String DEFAULT_APP_TOKEN = "282340ce12c5e10fa84171660a2054f8";
 
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://upgrade.fengmi.tv";
 
-    public static final String PATCH_FEEDBACK = "";
+    public static final String PATCH_FEEDBACK = "/api/patch/feedback";
 
-    public static final String PATCH_CHECK = "";
+    public static final String PATCH_CHECK = "/api/patch/check";
 
 
     /***********请求基础参数**********/
@@ -80,11 +81,11 @@ public class CommonParams {
 
     /***********客户端上报补丁 下载/安装数据 相关参数**********/
 
-    //下载是否成功..成功为true.失败false
+    //下载是否成功..成功为0.失败1
     public static final String DOWNLOADRESULT = "downloadRs";
     //下载失败原因.当下载成功时.此值为空
     public static final String  DOWNLOADFAILMSG= "downloadFailMsg";
-    //安装是否成功..成功为true.失败false
+    //安装是否成功..成功为0.失败1
     public static final String  INSTALLRESULT= "installRs";
     //安装失败原因.当安装成功时.此值为空
     public static final String  INSTALLFAILMSG= "installFailMsg";
@@ -98,33 +99,54 @@ public class CommonParams {
     public static final int FEEDBACK_TYPE_INSTALL = 2;
 
 
+    /**
+     * 获取补丁包检测基础字段
+     * @param context
+     * @return
+     */
     public static HashMap<String,String> getPatchCheckParams(Context context){
         HashMap<String,String> check = new HashMap<>();
         check.put(PACKAGENAME,DeviceUtils.getPackageName(context));
         check.put(VERSIONCODE,DeviceUtils.getVersion(context));
-        check.put(TINKERID,DeviceUtils.getManifestTinkerId(context));
-        check.put(PATCHVERSION,DeviceUtils.getPatchVersion(context));
+        if(!TextUtils.isEmpty(DeviceUtils.getManifestTinkerId(context))){
+            check.put(TINKERID,DeviceUtils.getManifestTinkerId(context));
+        }
+        if(!TextUtils.isEmpty(DeviceUtils.getPatchVersion(context))){
+            check.put(PATCHVERSION,DeviceUtils.getPatchVersion(context));
+        }
         return check;
     }
 
     /**
-     * patch补丁下载反馈
+     *
      * @param context *
-     * @param type {@link #FEEDBACK_TYPE_DOWNLOAD} :下载相关，{@link #FEEDBACK_TYPE_INSTALL}：安装相关
+     *
      * @return
      */
-    public static HashMap<String,String> getPatchFeedback(Context context,int type){
+    /**
+     * patch补丁下载反馈基础字段
+     * @param context
+     * @param type {@link #FEEDBACK_TYPE_DOWNLOAD} :下载相关，{@link #FEEDBACK_TYPE_INSTALL}：安装相关
+     * @param isDownloadSuccess 下载是否成功
+     * @param downloadFailedReason 下载失败原因
+     * @param isInstallSuccess 安装是否成功
+     * @param installFailedReason 安装失败原因
+     * @return Feedback接口参数
+     */
+    public static HashMap<String,String> getPatchFeedback(Context context,int type,boolean isDownloadSuccess,String downloadFailedReason,boolean isInstallSuccess,String installFailedReason){
         HashMap<String,String> feedback = new HashMap<>();
         feedback.put(PACKAGENAME,DeviceUtils.getPackageName(context));
         feedback.put(VERSIONCODE,DeviceUtils.getVersion(context));
-        //TODO 此处需要跟服务端讨论
         switch (type){
 
             case FEEDBACK_TYPE_DOWNLOAD:
-
+                feedback.put(DOWNLOADRESULT,isDownloadSuccess ? "1" : "0");
+                feedback.put(DOWNLOADFAILMSG,downloadFailedReason);
                 break;
 
             case FEEDBACK_TYPE_INSTALL:
+                feedback.put(INSTALLRESULT,isInstallSuccess ? "1" : "0");
+                feedback.put(INSTALLFAILMSG,installFailedReason);
                 break;
 
         }

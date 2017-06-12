@@ -18,16 +18,23 @@ package com.kn.fui.tinkerlib.service;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.kn.fui.tinkerlib.util.GlobalParams;
+import com.kn.fui.tinkerlib.util.IOUtils;
 import com.tencent.tinker.lib.service.DefaultTinkerResultService;
 import com.tencent.tinker.lib.service.PatchResult;
+import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.lib.util.TinkerServiceInternals;
 
 import java.io.File;
+import java.util.HashMap;
 
 import com.kn.fui.tinkerlib.util.Utils;
+
+import org.json.JSONObject;
 
 
 /**
@@ -36,8 +43,8 @@ import com.kn.fui.tinkerlib.util.Utils;
  * Created by zhangshaowen on 16/4/13.
  */
 public class SampleResultService extends DefaultTinkerResultService {
-    private static final String TAG = "Tinker.SampleResultService";
 
+    private static final String TAG = "Tinker.SampleResultService";
 
     @Override
     public void onPatchResult(final PatchResult result) {
@@ -61,6 +68,9 @@ public class SampleResultService extends DefaultTinkerResultService {
                 }
             }
         });
+
+        askFeedbackToServerSuccess(result); // 将补丁结果反馈给服务器
+
         // is success and newPatch, it is nice to delete the raw file, and restart at once
         // for old patch, you can't delete the patch file
         if (result.isSuccess) {
@@ -96,6 +106,35 @@ public class SampleResultService extends DefaultTinkerResultService {
         TinkerLog.i(TAG, "app is background now, i can kill quietly");
         //you can send service or broadcast intent to restart your process
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    /**
+     * 告诉服务器，下载补丁、安装补丁操作结果
+     */
+    private void askFeedbackToServerSuccess(PatchResult result){
+        HashMap<String,String> params = new HashMap<>();
+        params.putAll(GlobalParams.getCommonParams(getApplicationContext()));
+        String throwMsg = ((result.e == null) ? null : result.e.toString());
+        String installFailedReason = result.isSuccess ? null : throwMsg;
+        params.putAll(GlobalParams.getPatchFeedback(getApplicationContext(), GlobalParams.FEEDBACK_TYPE_DOWNLOAD,result.isSuccess,null,result.isSuccess,installFailedReason));
+        JSONObject jsonObject = IOUtils.getJSONObject(params, GlobalParams.BASE_URL.concat(GlobalParams.PATCH_FEEDBACK));
+        if(jsonObject == null){
+            return ;
+        }
+        if(TextUtils.equals("0",jsonObject.optString("error_code"))){ // 请求正常
+            JSONObject dataObject = jsonObject.optJSONObject("data");
+            if(dataObject != null){
+                String rs = dataObject.optString("rs");
+                if(TextUtils.equals("0",rs)){
+                    TinkerLog.i(TAG, "反馈成功  = " + jsonObject.toString());
+                }else{
+                    TinkerLog.i(TAG, "反馈失败  = " + jsonObject.toString());
+                }
+
+            }
+        }else{
+            TinkerLog.i(TAG, "反馈接口请求失败 = " + jsonObject.toString());
+        }
     }
 
 }

@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.kn.fui.tinkerlib.util.CommonParams;
+import com.kn.fui.tinkerlib.util.GlobalParams;
 import com.kn.fui.tinkerlib.util.IOUtils;
-import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -35,9 +33,10 @@ public class DownloadService extends IntentService implements IIntentType {
      * 开始下载补丁
      * @param mContext
      */
-    public static void startCheckPatchService(Context mContext){
+    public static void startCheckPatchService(Context mContext,boolean isTv){
         Intent download = new Intent(mContext,DownloadService.class);
         download.putExtra(INTENT_KEY_TYPE,GET_PATCH_INFO);
+        download.putExtra(INTENT_IS_TV,isTv);
         mContext.startService(download);
     }
 
@@ -53,9 +52,9 @@ public class DownloadService extends IntentService implements IIntentType {
 
             case GET_PATCH_INFO: // 获取patch相关信息
                 HashMap<String,String> params = new HashMap<>();
-                params.putAll(CommonParams.getCommonParams(getApplicationContext()));
-                params.putAll(CommonParams.getPatchCheckParams(getApplicationContext()));
-                JSONObject jsonObject = IOUtils.getJSONObject(params, CommonParams.BASE_URL.concat(CommonParams.PATCH_CHECK));
+                params.putAll(GlobalParams.getCommonParams(getApplicationContext()));
+                params.putAll(GlobalParams.getPatchCheckParams(getApplicationContext()));
+                JSONObject jsonObject = IOUtils.getJSONObject(params, GlobalParams.BASE_URL.concat(GlobalParams.PATCH_CHECK));
                 if(jsonObject == null){
                     return ;
                 }

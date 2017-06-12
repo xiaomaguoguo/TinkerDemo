@@ -12,4 +12,6 @@ public interface IIntentType {
 
     String INTENT_KEY_TYPE = "intent_key_type";
 
+    String INTENT_IS_TV = "isTv";
+
 }

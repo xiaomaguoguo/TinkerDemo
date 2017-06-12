@@ -42,6 +42,7 @@ public class TinkerManager {
     private static ApplicationLike                applicationLike;
     private static SampleUncaughtExceptionHandler uncaughtExceptionHandler;
     private static boolean isInstalled = false;
+     static boolean isTv = true; //是否是TV,根据此变量来添加不同平台的不同参数
 
     public static void setTinkerApplicationLike(ApplicationLike appLike) {
         applicationLike = appLike;

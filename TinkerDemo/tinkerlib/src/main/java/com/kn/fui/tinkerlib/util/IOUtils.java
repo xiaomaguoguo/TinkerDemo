@@ -20,7 +20,9 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.tencent.tinker.lib.service.PatchResult;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
+import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.loader.shareutil.SharePatchFileUtil;
 
 import org.json.JSONException;
@@ -194,11 +196,18 @@ public class IOUtils {
         return stringBuffer.toString();
     }
 
+    /**
+     * 下载补丁并保存到Sdcard
+     * @param context
+     * @param params
+     * @param downloadUrl
+     * @param patchServerMd5
+     */
     //TODO 以下功能需要测试
     public static void downloadAndSave2Sdcard(Context context,HashMap<String,String> params,String downloadUrl,String patchServerMd5){
         // /storage/emulated/0/Android/data/packageName/cache
         String externamCache =  context.getExternalCacheDir().getAbsolutePath();
-        String filePath = externamCache.concat("/").concat("patch.abc");
+        String filePath = externamCache.concat("/").concat("patch.zip");
         File downloadFile = new File(filePath);
         try {
             InputStream input = getInputStream(params,downloadUrl,true);
@@ -224,11 +233,12 @@ public class IOUtils {
 //        }
 
         boolean isSuccess = verifyDownloadFileCorrect(patchServerMd5,downloadFile);
-        Log.d(TAG,isSuccess ? "下载并保存成功,开始打补丁..." : "下载或者校验失败...");
+        Log.d(TAG,isSuccess ? "下载并保存成功,开始打补丁..." : "下载后文件MD5校验失败...");
         if(isSuccess){ // 下载成功
             TinkerInstaller.onReceiveUpgradePatch(context,filePath);
         }else{// 如果下载失败或者校验失败了，则删除垃圾文件
             SharePatchFileUtil.safeDeleteFile(downloadFile);
+            askFeedbackToServerFailed(context,"下载后文件MD5校验失败...");
         }
 
     }
@@ -243,6 +253,33 @@ public class IOUtils {
         String downloadMd5 = SharePatchFileUtil.getMD5(downloadFile);
         Log.d(TAG,"返回的urlMd5 = ".concat(urlMd5).concat(" ;自己拿到的urlMd5 =  ").concat(downloadMd5));
         return !TextUtils.isEmpty(urlMd5) && !TextUtils.isEmpty(downloadMd5) && TextUtils.equals(urlMd5,downloadMd5);
+    }
+
+    /**
+     * 告诉服务器，下载补丁、安装补丁操作都成功了
+     */
+    private static void askFeedbackToServerFailed(Context context,String downloadFailedReason){
+        HashMap<String,String> params = new HashMap<>();
+        params.putAll(GlobalParams.getCommonParams(context.getApplicationContext()));
+        params.putAll(GlobalParams.getPatchFeedback(context.getApplicationContext(), GlobalParams.FEEDBACK_TYPE_DOWNLOAD,false,downloadFailedReason,false,null));
+        JSONObject jsonObject = IOUtils.getJSONObject(params, GlobalParams.BASE_URL.concat(GlobalParams.PATCH_FEEDBACK));
+        if(jsonObject == null){
+            return ;
+        }
+        if(TextUtils.equals("0",jsonObject.optString("error_code"))){ // 请求正常
+            JSONObject dataObject = jsonObject.optJSONObject("data");
+            if(dataObject != null){
+                String rs = dataObject.optString("rs");
+                if(TextUtils.equals("0",rs)){
+                    TinkerLog.i(TAG, "反馈下载失败完成  = " + jsonObject.toString());
+                }else{
+                    TinkerLog.i(TAG, "反馈下载失败异常  = " + jsonObject.toString());
+                }
+
+            }
+        }else{
+            TinkerLog.i(TAG, "反馈接口请求失败 = " + jsonObject.toString());
+        }
     }
 
     /**
