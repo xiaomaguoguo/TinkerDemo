@@ -185,9 +185,9 @@ public class IOUtils {
         try {
             for(Map.Entry<String, String> entry : params.entrySet()) {
                 stringBuffer.append(entry.getKey())
-                        .append("=")
-                        .append(URLEncoder.encode(entry.getValue() == null ? "null" : entry.getValue(), "UTF-8")) //服务端要求就算是为空也需要回传这个空的字段，无奈这么处理
-                        .append("&");
+                .append("=")
+                .append(URLEncoder.encode(entry.getValue() == null ? "" : entry.getValue(), "UTF-8")) //服务端要求就算是为空也需要回传这个空的字段，无奈这么处理
+                .append("&");
             }
             stringBuffer.deleteCharAt(stringBuffer.length() - 1);    //删除最后的一个"&"
         } catch (Exception e) {
