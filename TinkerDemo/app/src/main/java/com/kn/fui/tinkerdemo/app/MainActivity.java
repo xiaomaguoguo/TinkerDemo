@@ -1,21 +1,9 @@
 package com.kn.fui.tinkerdemo.app;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kn.fui.tinkerdemo.R;
-import com.kn.fui.tinkerlib.util.CommonParams;
-import com.kn.fui.tinkerlib.util.DeviceUtils;
 import com.kn.fui.tinkerlib.util.IOUtils;
 import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
@@ -89,32 +75,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "回滚完成，请重启应用", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.button4: //  JavaJs互调
-                Intent javaJsIntent = new Intent(this,JavaJsActivity.class);
-                startActivity(javaJsIntent);
+            case R.id.button4: //  ????/**/
+
                 break;
 
             case R.id.button5: //请求服务器
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String URL = "";
-                        HashMap<String,String> params = new HashMap<>();
-                        params.put("platform","MST_6A838");
-                        params.put("supportvr","1");
-                        params.put("method","bftv.voice.remind");
-                        params.put("version","2.0");
-                        params.put("softid","11170402");
-                        params.put("softid","11170402");
-                        params.put("apptoken","282340ce12c5e10fa84171660a2054f8");
-                        params.put("from","bftv_android");
-                        params.put("requestplatform","tv");
-                        params.put("requestplatform","tv");
-                        params.put("sys_version","V1.0.19");
-                        JSONObject jsonObject = IOUtils.getJSONObject(params,URL);
-                        Log.i(TAG,jsonObject.toString());
-                    }
-                }).start();
+                Toast.makeText(this, "请求服务器", Toast.LENGTH_SHORT).show();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        String URL = "";
+//                        HashMap<String,String> params = new HashMap<>();
+//                        params.put("platform","MST_6A838");
+//                        params.put("supportvr","1");
+//                        params.put("method","bftv.voice.remind");
+//                        params.put("version","2.0");
+//                        params.put("softid","11170402");
+//                        params.put("softid","11170402");
+//                        params.put("apptoken","282340ce12c5e10fa84171660a2054f8");
+//                        params.put("from","bftv_android");
+//                        params.put("requestplatform","tv");
+//                        params.put("requestplatform","tv");
+//                        params.put("sys_version","V1.0.19");
+//                        JSONObject jsonObject = IOUtils.getJSONObject(params,URL);
+//                        Log.i(TAG,jsonObject.toString());
+//                    }
+//                }).start();
                 break;
 
         }
