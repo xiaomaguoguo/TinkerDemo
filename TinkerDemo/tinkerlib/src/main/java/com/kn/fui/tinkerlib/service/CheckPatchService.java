@@ -33,7 +33,7 @@ public class CheckPatchService extends IntentService implements IIntentType {
      * 开始下载补丁
      * @param mContext
      */
-    public static void startCheckPatchService(Context mContext,boolean isTv){
+    public static void runCheckService(Context mContext,boolean isTv){
         Intent download = new Intent(mContext,CheckPatchService.class);
         download.putExtra(INTENT_KEY_TYPE,GET_PATCH_INFO);
         download.putExtra(INTENT_IS_TV,isTv);
