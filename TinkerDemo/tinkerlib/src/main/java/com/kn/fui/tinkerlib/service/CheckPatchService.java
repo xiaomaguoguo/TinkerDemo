@@ -15,17 +15,17 @@ import java.util.HashMap;
 
 /**
  * Created by KNothing on 2017/6/2.
- * 下载服务类
+ * 检测补丁服务类
  */
-public class DownloadService extends IntentService implements IIntentType {
+public class CheckPatchService extends IntentService implements IIntentType {
 
-    public static final String TAG = DownloadService.class.getSimpleName();
+    public static final String TAG = CheckPatchService.class.getSimpleName();
 
-    public DownloadService(){
-        super("DownloadService");
+    public CheckPatchService(){
+        super("CheckPatchService");
     }
 
-    public DownloadService(String name) {
+    public CheckPatchService(String name) {
         super(name);
     }
 
@@ -34,7 +34,7 @@ public class DownloadService extends IntentService implements IIntentType {
      * @param mContext
      */
     public static void startCheckPatchService(Context mContext,boolean isTv){
-        Intent download = new Intent(mContext,DownloadService.class);
+        Intent download = new Intent(mContext,CheckPatchService.class);
         download.putExtra(INTENT_KEY_TYPE,GET_PATCH_INFO);
         download.putExtra(INTENT_IS_TV,isTv);
         mContext.startService(download);
