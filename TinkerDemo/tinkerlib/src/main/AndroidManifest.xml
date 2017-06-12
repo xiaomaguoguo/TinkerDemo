@@ -18,7 +18,7 @@
             android:exported="false"/>
 
         <service
-            android:name=".service.DownloadService"
+            android:name=".service.CheckPatchService"
             android:exported="false"/>
 
     </application>

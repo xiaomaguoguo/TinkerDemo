@@ -113,7 +113,6 @@ public class SampleResultService extends DefaultTinkerResultService {
      */
     private void askFeedbackToServerSuccess(PatchResult result){
         HashMap<String,String> params = new HashMap<>();
-        params.putAll(GlobalParams.getCommonParams(getApplicationContext()));
         String throwMsg = ((result.e == null) ? null : result.e.toString());
         String installFailedReason = result.isSuccess ? null : throwMsg;
         params.putAll(GlobalParams.getPatchFeedback(getApplicationContext(), GlobalParams.FEEDBACK_TYPE_DOWNLOAD,result.isSuccess,null,result.isSuccess,installFailedReason));

@@ -260,7 +260,6 @@ public class IOUtils {
      */
     private static void askFeedbackToServerFailed(Context context,String downloadFailedReason){
         HashMap<String,String> params = new HashMap<>();
-        params.putAll(GlobalParams.getCommonParams(context.getApplicationContext()));
         params.putAll(GlobalParams.getPatchFeedback(context.getApplicationContext(), GlobalParams.FEEDBACK_TYPE_DOWNLOAD,false,downloadFailedReason,false,null));
         JSONObject jsonObject = IOUtils.getJSONObject(params, GlobalParams.BASE_URL.concat(GlobalParams.PATCH_FEEDBACK));
         if(jsonObject == null){
