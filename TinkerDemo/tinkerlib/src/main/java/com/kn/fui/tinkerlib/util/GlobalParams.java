@@ -2,6 +2,10 @@ package com.kn.fui.tinkerlib.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.baofengtv.middleware.tv.BFTVCommonManager;
+import com.baofengtv.middleware.tv.BFTVFactoryManager;
 
 import java.util.HashMap;
 
@@ -9,15 +13,11 @@ import java.util.HashMap;
  * Created by MaZhihua on 2017/6/9.
  * 通用参数
  */
-public class CommonParams {
+public class GlobalParams {
 
     public static final String DEFAULT_APP_TOKEN = "282340ce12c5e10fa84171660a2054f8";
 
-    public static final String BASE_URL = "http://upgrade.fengmi.tv";
 
-    public static final String PATCH_FEEDBACK = "/api/patch/feedback";
-
-    public static final String PATCH_CHECK = "/api/patch/check";
 
 
     /***********请求基础参数**********/
@@ -40,6 +40,11 @@ public class CommonParams {
     /***********请求基础参数**********/
 
 
+
+
+
+
+
     /***********电视公用参数**********/
 
     //平台信息
@@ -58,6 +63,10 @@ public class CommonParams {
 
 
 
+
+
+
+
     /***********手机公用参数**********/
     //手机imei号
     public static final String IMEI = "imei";
@@ -65,32 +74,52 @@ public class CommonParams {
 
 
 
+
+
+
     /***********检查是否有升级补丁的请求参数**********/
 
     //当前应用包的名称
     public static final String PACKAGENAME = "packName";
+
     //当前应用包的版本号
     public static final String VERSIONCODE = "versionCode";
+
     //当前应用包的tinkerId
     public static final String TINKERID = "tinkerId";
+
     //当前应用包的patchVersion
     public static final String PATCHVERSION = "patchVersion";
 
     /***********检查是否有升级补丁的请求参数**********/
 
 
+
+
+
+
+
+
     /***********客户端上报补丁 下载/安装数据 相关参数**********/
 
     //下载是否成功..成功为0.失败1
     public static final String DOWNLOADRESULT = "downloadRs";
+
     //下载失败原因.当下载成功时.此值为空
     public static final String  DOWNLOADFAILMSG= "downloadFailMsg";
+
     //安装是否成功..成功为0.失败1
     public static final String  INSTALLRESULT= "installRs";
+
     //安装失败原因.当安装成功时.此值为空
     public static final String  INSTALLFAILMSG= "installFailMsg";
 
     /***********客户端上报补丁 下载/安装数据 相关参数**********/
+
+
+
+
+
 
     //补丁下载反馈
     public static final int FEEDBACK_TYPE_DOWNLOAD = 1;
@@ -108,21 +137,11 @@ public class CommonParams {
         HashMap<String,String> check = new HashMap<>();
         check.put(PACKAGENAME,DeviceUtils.getPackageName(context));
         check.put(VERSIONCODE,DeviceUtils.getVersion(context));
-        if(!TextUtils.isEmpty(DeviceUtils.getManifestTinkerId(context))){
-            check.put(TINKERID,DeviceUtils.getManifestTinkerId(context));
-        }
-        if(!TextUtils.isEmpty(DeviceUtils.getPatchVersion(context))){
-            check.put(PATCHVERSION,DeviceUtils.getPatchVersion(context));
-        }
+        check.put(TINKERID,DeviceUtils.getManifestTinkerId(context));
+        check.put(PATCHVERSION,DeviceUtils.getPatchVersion(context));
         return check;
     }
 
-    /**
-     *
-     * @param context *
-     *
-     * @return
-     */
     /**
      * patch补丁下载反馈基础字段
      * @param context
@@ -132,9 +151,11 @@ public class CommonParams {
      * @param isInstallSuccess 安装是否成功
      * @param installFailedReason 安装失败原因
      * @return Feedback接口参数
+     * 备注 ：服务端要求这个地方尽量使用一个接口，所以参数会有点多
      */
     public static HashMap<String,String> getPatchFeedback(Context context,int type,boolean isDownloadSuccess,String downloadFailedReason,boolean isInstallSuccess,String installFailedReason){
         HashMap<String,String> feedback = new HashMap<>();
+        feedback.putAll(getCommonParams(context));
         feedback.put(PACKAGENAME,DeviceUtils.getPackageName(context));
         feedback.put(VERSIONCODE,DeviceUtils.getVersion(context));
         switch (type){
@@ -154,40 +175,48 @@ public class CommonParams {
         return feedback;
     }
 
+    /**
+     * 获取接口请求通用参数
+     * @param context
+     * @return
+     */
     public static HashMap<String,String> getCommonParams(Context context){
         HashMap<String,String> common = new HashMap<>();
         common.put(APP_TOKEN,DEFAULT_APP_TOKEN);
         common.put(APP_VERSION, DeviceUtils.getVersion(context));
         common.put(MAC,DeviceUtils.getMacAddress(context));
         common.put(NETWORKTYPE,DeviceUtils.getInternetType(context));
+        common.putAll(TinkerManager.isTv ? getTVCommonParams(context) : getPhoneCommonParams(context));
         return common;
     }
 
-    public static HashMap<String,String> getTVCommonParams(){
+    /**
+     * 获取TV通用参数
+     * @param context
+     * @return
+     */
+    public static HashMap<String,String> getTVCommonParams(Context context){
         HashMap<String,String> common = new HashMap<>();
-        common.put(FROM,"tv");
-        //TODO 下面四个要依赖BFTVMiddleWare.jar包, 下周一商量
-//        common.put(PLATFORM,);
-//        common.put(SYS_VERSION, );
-//        common.put(SOFTID,);
-//        common.put(UUID,);
+        common.put(FROM,"bftv_android");
+        try{
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.i("GlobalParams","获取TV参数异常");
+        }
         return common;
     }
 
+    /**
+     * 获取手机通用参数
+     * @param context
+     * @return
+     */
     public static HashMap<String,String> getPhoneCommonParams(Context context){
         HashMap<String,String> common = new HashMap<>();
         common.put(IMEI, DeviceUtils.getIMEI(context));
-        common.put(FROM,"phone");
+        common.put(FROM,"bftvm_android");
         return common;
     }
-
-
-
-
-
-
-
-
-
 
 }
