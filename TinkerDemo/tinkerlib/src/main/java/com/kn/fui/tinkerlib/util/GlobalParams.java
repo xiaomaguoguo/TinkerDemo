@@ -199,7 +199,10 @@ public class GlobalParams {
         HashMap<String,String> common = new HashMap<>();
         common.put(FROM,"bftv_android");
         try{
-
+            common.put(PLATFORM, BFTVCommonManager.getInstance(context).getPlatform());
+            common.put(SYS_VERSION,BFTVCommonManager.getInstance(context).getVersion() );
+            common.put(SOFTID,BFTVCommonManager.getInstance(context).getSoftwareID());
+            common.put(UUID, BFTVFactoryManager.getInstance(context).getSerialNumber());
         }catch (Exception e){
             e.printStackTrace();
             Log.i("GlobalParams","获取TV参数异常");
