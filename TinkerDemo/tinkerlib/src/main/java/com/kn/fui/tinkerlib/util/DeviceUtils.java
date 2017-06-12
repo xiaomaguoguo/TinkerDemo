@@ -111,8 +111,12 @@ public class DeviceUtils {
         //检查网络连接
         NetworkInfo info = mConnectivity.getActiveNetworkInfo();
         if(info != null && info.isConnected()){
-            return  info.getType() + "";
+            if(info.getType() == 1){ //wifi
+                return "wifi";
+            }else if(info.getType() == 9){ //以太网，有线
+                return "ethernet";
+            }
         }
-        return "";
+        return "other";
     }
 }
