@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -63,11 +64,11 @@ public class IOUtils {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
-            connection.setDoOutput(true);             //允许向服务器输出数据
-            connection.setDoInput(true);              //允许接收服务器数据
-            connection.setRequestMethod(isDownloadFile ? "GET" : "POST");
-            connection.setUseCaches(false);           // Post 请求不能使用缓存
             if(!isDownloadFile && params != null && !params.isEmpty()){
+                connection.setDoOutput(true);             //允许向服务器输出数据
+                connection.setDoInput(true);              //允许接收服务器数据
+                connection.setRequestMethod("POST");
+                connection.setUseCaches(false);           // Post 请求不能使用缓存
                 byte[] data = getRequestData(params).getBytes();//获得请求体
                 //设置请求体的类型是文本类型
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -209,11 +210,37 @@ public class IOUtils {
         String externamCache =  context.getExternalCacheDir().getAbsolutePath();
         String filePath = externamCache.concat("/").concat("patch.zip");
         File downloadFile = new File(filePath);
+        FileOutputStream ouput = null ;
+        if(downloadFile.exists()){
+            downloadFile.delete();
+        }
         try {
             InputStream input = getInputStream(params,downloadUrl,true);
-            writeToFile(readAsString(input),downloadFile);
+
+            if(input != null) {
+                //获取自己数组
+                byte[] getData = readInputStream(input);
+                ouput = new FileOutputStream(downloadFile);
+                ouput.write(getData);
+//                byte buffer[] = new byte[4 * 1024];
+//                while ((input.read(buffer)) != -1) {
+//                    ouput.write(buffer);
+//                }
+//                writeToFile(readAsString(input),downloadFile);
+//                ouput.flush();
+                // Perform an fsync on the FileOutputStream.
+//                ouput.getFD().sync();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if(ouput != null){
+                try {
+                    ouput.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 //        try {
 //            OutputStream output = new FileOutputStream(downloadFile);
@@ -241,6 +268,24 @@ public class IOUtils {
             askFeedbackToServerFailed(context,"下载后文件MD5校验失败...");
         }
 
+    }
+
+    /**
+     * 从输入流中获取字节数组
+     *
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    public static byte[] readInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while ((len = inputStream.read(buffer)) != -1) {
+            bos.write(buffer, 0, len);
+        }
+        bos.close();
+        return bos.toByteArray();
     }
 
     /**
