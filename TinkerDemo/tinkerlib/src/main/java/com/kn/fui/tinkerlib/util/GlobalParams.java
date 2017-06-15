@@ -1,7 +1,6 @@
 package com.kn.fui.tinkerlib.util;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.baofengtv.middleware.tv.BFTVCommonManager;
@@ -85,6 +84,9 @@ public class GlobalParams {
     //当前应用包的版本号
     public static final String VERSIONCODE = "versionCode";
 
+    //当前应用包的版本名称
+//    public static final String VERSIONNAME = "versionName";
+
     //当前应用包的tinkerId
     public static final String TINKERID = "tinkerId";
 
@@ -136,7 +138,8 @@ public class GlobalParams {
     public static HashMap<String,String> getPatchCheckParams(Context context){
         HashMap<String,String> check = new HashMap<>();
         check.put(PACKAGENAME,DeviceUtils.getPackageName(context));
-        check.put(VERSIONCODE,DeviceUtils.getVersion(context));
+        check.put(VERSIONCODE,DeviceUtils.getVersionCode(context));
+//        check.put(VERSIONNAME,DeviceUtils.getVersionName(context));
         check.put(TINKERID,DeviceUtils.getManifestTinkerId(context));
         check.put(PATCHVERSION,DeviceUtils.getPatchVersion(context));
         return check;
@@ -157,7 +160,7 @@ public class GlobalParams {
         HashMap<String,String> feedback = new HashMap<>();
         feedback.putAll(getCommonParams(context));
         feedback.put(PACKAGENAME,DeviceUtils.getPackageName(context));
-        feedback.put(VERSIONCODE,DeviceUtils.getVersion(context));
+        feedback.put(VERSIONCODE,DeviceUtils.getVersionCode(context));
         switch (type){
 
             case FEEDBACK_TYPE_DOWNLOAD:
@@ -183,7 +186,7 @@ public class GlobalParams {
     public static HashMap<String,String> getCommonParams(Context context){
         HashMap<String,String> common = new HashMap<>();
         common.put(APP_TOKEN,DEFAULT_APP_TOKEN);
-        common.put(APP_VERSION, DeviceUtils.getVersion(context));
+        common.put(APP_VERSION, DeviceUtils.getVersionCode(context));
         common.put(MAC,DeviceUtils.getMacAddress(context));
         common.put(NETWORKTYPE,DeviceUtils.getInternetType(context));
         common.putAll(TinkerManager.isTv ? getTVCommonParams(context) : getPhoneCommonParams(context));
