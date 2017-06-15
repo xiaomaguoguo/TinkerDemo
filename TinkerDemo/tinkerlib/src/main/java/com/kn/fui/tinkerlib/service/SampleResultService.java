@@ -46,6 +46,8 @@ public class SampleResultService extends DefaultTinkerResultService {
 
     private static final String TAG = "Tinker.SampleResultService";
 
+    public static final boolean DEBUG = true;
+
     @Override
     public void onPatchResult(final PatchResult result) {
         if (result == null) {
@@ -57,17 +59,19 @@ public class SampleResultService extends DefaultTinkerResultService {
         //first, we want to kill the recover process
         TinkerServiceInternals.killTinkerPatchServiceProcess(getApplicationContext());
 
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (result.isSuccess) {
-                    Toast.makeText(getApplicationContext(), "patch success, please restart process", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "patch fail, please check reason", Toast.LENGTH_LONG).show();
+        if(DEBUG){
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (result.isSuccess) {
+                        Toast.makeText(getApplicationContext(), "patch success, please restart process", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "patch fail, please check reason", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         askFeedbackToServerSuccess(result); // 将补丁结果反馈给服务器
 
@@ -115,7 +119,7 @@ public class SampleResultService extends DefaultTinkerResultService {
         HashMap<String,String> params = new HashMap<>();
         String throwMsg = ((result.e == null) ? null : result.e.toString());
         String installFailedReason = result.isSuccess ? null : throwMsg;
-        params.putAll(GlobalParams.getPatchFeedback(getApplicationContext(), GlobalParams.FEEDBACK_TYPE_DOWNLOAD,result.isSuccess,null,result.isSuccess,installFailedReason));
+        params.putAll(GlobalParams.getPatchFeedback(getApplicationContext(), GlobalParams.FEEDBACK_TYPE_BOTH,result.isSuccess,null,result.isSuccess,installFailedReason));
         JSONObject jsonObject = IOUtils.getJSONObject(params, GlobalParams.BASE_URL.concat(GlobalParams.PATCH_FEEDBACK));
         if(jsonObject == null){
             return ;
