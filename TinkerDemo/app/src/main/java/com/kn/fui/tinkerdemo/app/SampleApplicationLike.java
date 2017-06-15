@@ -62,6 +62,8 @@ import com.kn.fui.tinkerlib.util.TinkerManager;
 public class SampleApplicationLike extends DefaultApplicationLike {
     private static final String TAG = "Tinker.SampleApplicationLike";
 
+    public static final boolean isNeedTinkerLog = true;
+
     public SampleApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag,
                                  long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
@@ -89,7 +91,9 @@ public class SampleApplicationLike extends DefaultApplicationLike {
         TinkerManager.setUpgradeRetryEnable(true);
 
         //optional set logIml, or you can use default debug log
-        TinkerInstaller.setLogIml(new MyLogImp());
+        if(isNeedTinkerLog){
+            TinkerInstaller.setLogIml(new MyLogImp());
+        }
 
         //installTinker after load multiDex
         //or you can put com.tencent.tinker.** to main dex
